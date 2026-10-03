@@ -1,1 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desmoz</title>
 
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #0b1020;
+        color: white;
+        min-height: 100vh;
+    }
+
+    /* ---------- NAVBAR ---------- */
+
+    nav {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 35px;
+        background: #11182d;
+        border-bottom: 1px solid #26304d;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .logo span {
+        color: #6c8cff;
+    }
+
+    nav button {
+        background: #1c2745;
+        color: white;
+        border: 1px solid #344269;
+        padding: 10px 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    nav button:hover {
+        background: #2a3963;
+    }
+
+    /* ---------- MAIN ---------- */
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 50px 25px;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .hero h1 {
+        font-size: clamp(45px, 8vw, 80px);
+        margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+        color: #6c8cff;
+    }
+
+    .hero p {
+        color: #aeb8d4;
+        font-size: 18px;
+        max-width: 650px;
+        margin: auto;
+        line-height: 1.6;
+    }
+
+    /* ---------- MATH CARDS ---------- */
+
+    .section-title {
+        margin: 30px 0 20px;
+        font-size: 28px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background: #131c34;
+        border: 1px solid #293657;
+        border-radius: 16px;
+        padding: 25px;
+        transition: transform 0.2s, border 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: #6c8cff;
+    }
+
+    .card h3 {
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        color: #aeb8d4;
+        line-height: 1.5;
+    }
+
+    /* ---------- BUTTON ---------- */
+
+    .primary {
+        margin-top: 25px;
+        padding: 14px 25px;
+        border: none;
+        border-radius: 10px;
+        background: #6c8cff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .primary:hover {
+        background: #5877e8;
+        transform: translateY(-2px);
+    }
+
+    /* ---------- GAME HUB ---------- */
+
+    #games {
+        display: none;
+    }
+
+    .game-card {
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .game-card button {
+        width: 100%;
+        padding: 11px;
+        border: none;
+        border-radius: 9px;
+        background: #6c8cff;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .game-card button:hover {
+        background: #5877e8;
+    }
+
+    /* ---------- LOGIN ---------- */
+
+    #login {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 8, 18, 0.96);
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+    }
+
+    .login-box {
+        width: min(420px, 90%);
+        background: #131c34;
+        border: 1px solid #344269;
+        border-radius: 18px;
+        padding: 35px;
+        text-align: center;
+    }
+
+    .login-box h2 {
+        margin-bottom: 10px;
+    }
+
+    .login-box p {
+        color: #aeb8d4;
+        margin-bottom: 25px;
+    }
+
+    .login-box input {
+        width: 100%;
+        padding: 13px;
+        border-radius: 9px;
+        border: 1px solid #344269;
+        background: #0b1020;
+        color: white;
+        outline: none;
+        margin-bottom: 12px;
+    }
+
+    .error {
+        color: #ff7070;
+        margin-top: 12px;
+        display: none;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+        text-align: center;
+        padding: 40px;
+        color: #66718f;
+        margin-top: 60px;
+    }
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Des<span>moz</span></div>
+
+    <button onclick="openLogin()">
+        Game Hub
+    </button>
+</nav>
+
+<main>
+
+    <!-- MATH HOME -->
+
+    <section id="mathHome">
+        <div class="container">
+
+            <div class="hero">
+                <h1>Welcome to <span>Desmoz</span></h1>
+                <p>
+                    A simple learning portal for practicing mathematics,
+                    exploring concepts, and taking a break with some games.
+                </p>
+
+                <button class="primary" onclick="openLogin()">
+                    Open Game Hub
+                </button>
+            </div>
+
+            <h2 class="section-title">Math Tools</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🧮 Calculator</h3>
+                    <p>
+                        Quickly work through basic mathematical calculations.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📐 Geometry</h3>
+                    <p>
+                        Review common geometry formulas and concepts.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Algebra</h3>
+                    <p>
+                        Practice equations, expressions, and functions.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🔢 Numbers</h3>
+                    <p>
+                        Explore arithmetic and number patterns.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- GAME HUB -->
+
+    <section id="games">
+
+        <div class="container">
+
+            <div class="hero">
+                <h1>🎮 Game <span>Hub</span></h1>
+
+                <p>
+                    Welcome to the Desmoz game collection.
+                </p>
+
+                <button class="primary" onclick="backHome()">
+                    ← Back to Math
+                </button>
+            </div>
+
+            <div class="cards">
+
+                <div class="card game-card">
+                    <div>
+                        <h3>🧱 Block Breaker</h3>
+                        <p>
+                            Break blocks and try to get the highest score.
+                        </p>
+                    </div>
+
+                    <button onclick="startGame('Block Breaker')">
+                        Play
+                    </button>
+                </div>
+
+
+                <div class="card game-card">
+                    <div>
+                        <h3>🐍 Snake</h3>
+                        <p>
+                            Classic snake gameplay with a modern interface.
+                        </p>
+                    </div>
+
+                    <button onclick="startGame('Snake')">
+                        Play
+                    </button>
+                </div>
+
+
+                <div class="card game-card">
+                    <div>
+                        <h3>🧠 Memory</h3>
+                        <p>
+                            Match the cards and test your memory.
+                        </p>
+                    </div>
+
+                    <button onclick="startGame('Memory')">
+                        Play
+                    </button>
+                </div>
+
+
+                <div class="card game-card">
+                    <div>
+                        <h3>⚡ Reaction</h3>
+                        <p>
+                            Test how quickly you can react.
+                        </p>
+                    </div>
+
+                    <button onclick="startGame('Reaction')">
+                        Play
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- LOGIN -->
+
+<div id="login">
+
+    <div class="login-box">
+
+        <h2>Game Hub Access</h2>
+
+        <p>
+            Enter the access code to continue.
+        </p>
+
+        <input
+            id="accessCode"
+            type="password"
+            placeholder="Access code"
+        >
+
+        <button class="primary" onclick="checkCode()">
+            Enter
+        </button>
+
+        <div id="error" class="error">
+            Incorrect access code.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    Desmoz • Educational & Entertainment Portal
+</footer>
+
+
+<script>
+
+    function openLogin() {
+        document.getElementById("login").style.display = "flex";
+        document.getElementById("accessCode").focus();
+    }
+
+
+    function checkCode() {
+
+        const code =
+            document.getElementById("accessCode").value;
+
+        const error =
+            document.getElementById("error");
+
+        /*
+         * Demo access code.
+         *
+         * This is intentionally only a client-side demo.
+         * Do not use client-side passwords for protecting
+         * sensitive information.
+         */
+
+        if (code === "Code123") {
+
+            document.getElementById("login").style.display = "none";
+
+            document.getElementById("mathHome").style.display = "none";
+
+            document.getElementById("games").style.display = "block";
+
+            error.style.display = "none";
+
+        } else {
+
+            error.style.display = "block";
+
+        }
+    }
+
+
+    function backHome() {
+
+        document.getElementById("games").style.display = "none";
+
+        document.getElementById("mathHome").style.display = "block";
+
+    }
+
+
+    function startGame(game) {
+
+        alert(
+            game +
+            " is selected!\n\nYou can add the actual game code here."
+        );
+
+    }
+
+
+    // Allow pressing Enter in the access box
+
+    document
+        .getElementById("accessCode")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                checkCode();
+            }
+
+        });
+
+</script>
+
+</body>
+</html>
